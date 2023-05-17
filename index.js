@@ -35,6 +35,15 @@ app.get('/', (req, res) => {
     res.status(200).send('<h4> Integrated with SQL Expres</h4>')
 })
 
-// 
+// real connection
+app.get('/karyawan', (req, res) => {
+    let scriptQuery = 'select * from karyawan'
+    db.query(scriptQuery, (err, result) => {
+        db.query(scriptQuery, (err, results) => {
+            if (err) res.status(500).send(err)
+            res.status(200).send(results)
+        })
+    })
+})
 
 app.listen(PORT, () => { console.log(`API Running at : ${PORT}`) })
