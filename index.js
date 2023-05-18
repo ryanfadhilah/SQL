@@ -37,7 +37,18 @@ app.get('/', (req, res) => {
 
 // real connection
 app.get('/karyawan', (req, res) => {
+
     let scriptQuery = 'select * from karyawan'
+    if (req.query.nama) {
+        scriptQuery = `Select * from karyawan where nama = ${db.escape(req.query.nama)};`
+    } else if (req.query.usia) {
+        scriptQuery = `Select * from karyawan where usia = ${db.escape(req.query.usia)};`
+    } else if (req.query.idkaryawan) {
+        scriptQuery = `Select * from karyawan where idkaryawan = ${db.escape(req.query.idkaryawan)};`
+    } else if (req.query.email) {
+        scriptQuery = `Select * from karyawan where email = ${db.escape(req.query.email)};`
+    }
+
     db.query(scriptQuery, (err, result) => {
         db.query(scriptQuery, (err, results) => {
             if (err) res.status(500).send(err)
